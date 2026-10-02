@@ -1,0 +1,21 @@
+# Use official Node.js version 20 lightweight image
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Explicitly 'frontend' folder se package.json uthayein
+COPY frontend/package.json frontend/package-lock.json* ./
+RUN npm install
+
+# Ab baqi saara frontend ka code copy karein
+COPY frontend/ ./
+
+# Build the Next.js app for production
+RUN npm run build
+
+# Expose port 3000 for Next.js
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "start"]
